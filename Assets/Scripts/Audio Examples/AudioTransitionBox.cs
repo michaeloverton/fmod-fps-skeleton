@@ -16,7 +16,7 @@ public class AudioTransitionBox : MonoBehaviour
     [SerializeField] bool modulateMusic;
     [SerializeField] bool xModulation;
     [SerializeField] bool yModulation;
-    private BoxCollider collider;
+    private BoxCollider transitionCollider;
     private float minZ;
     private float maxZ;
     private float minX;
@@ -27,33 +27,33 @@ public class AudioTransitionBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        collider = GetComponent<BoxCollider>();
-        minZ = transform.position.z - collider.size.z/2;
-        maxZ = transform.position.z + collider.size.z/2;
+        transitionCollider = GetComponent<BoxCollider>();
+        minZ = transform.position.z - transitionCollider.size.z/2;
+        maxZ = transform.position.z + transitionCollider.size.z/2;
 
-        minX = transform.position.x - collider.size.x/2;
-        maxX = transform.position.x + collider.size.x/2;
+        minX = transform.position.x - transitionCollider.size.x/2;
+        maxX = transform.position.x + transitionCollider.size.x/2;
 
-        minY = transform.position.y - collider.size.y/2;
-        maxY = transform.position.y + collider.size.y/2;
+        minY = transform.position.y - transitionCollider.size.y/2;
+        maxY = transform.position.y + transitionCollider.size.y/2;
     }
 
     void OnTriggerStay(Collider other)
     {
         float paramValue;
         if(xModulation) {
-            paramValue = Utility.Remap(other.transform.position.x, minX, maxX, initialValue, maxValue);
-            if(invert) paramValue = Utility.Remap(other.transform.position.x, minX, maxX, maxValue, initialValue);
+            paramValue = Util.Remap(other.transform.position.x, minX, maxX, initialValue, maxValue);
+            if(invert) paramValue = Util.Remap(other.transform.position.x, minX, maxX, maxValue, initialValue);
         }
         else if(yModulation)
         {
-            paramValue = Utility.Remap(other.transform.position.y, minY, maxY, initialValue, maxValue);
-            if(invert) paramValue = Utility.Remap(other.transform.position.y, minY, maxY, maxValue, initialValue);
+            paramValue = Util.Remap(other.transform.position.y, minY, maxY, initialValue, maxValue);
+            if(invert) paramValue = Util.Remap(other.transform.position.y, minY, maxY, maxValue, initialValue);
         }
         else
         {
-            paramValue = Utility.Remap(other.transform.position.z, minZ, maxZ, initialValue, maxValue);
-            if(invert) paramValue = Utility.Remap(other.transform.position.z, minZ, maxZ, maxValue, initialValue);
+            paramValue = Util.Remap(other.transform.position.z, minZ, maxZ, initialValue, maxValue);
+            if(invert) paramValue = Util.Remap(other.transform.position.z, minZ, maxZ, maxValue, initialValue);
         }
         
         if(modulateCrowd) ambienceManager.SetCrowdParameter(parameterName, paramValue);
