@@ -12,10 +12,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Trigger
-  - Outside
-  - PortalCamHide
-  - Cig
+  - PlayerCollider
+  - Ground
+  - 
+  - 
   - 
   - 
   - 
